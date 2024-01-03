@@ -1,0 +1,16 @@
+@import "@assets/reset.css";
+@import '@assets/variables.scss';
+
+// FONTS
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+@font-face {
+  font-family: 'Remington_Noiseless';
+  src: url('./Remington-Noiseless.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#app {
+  font-family: $font-remington;
+}
