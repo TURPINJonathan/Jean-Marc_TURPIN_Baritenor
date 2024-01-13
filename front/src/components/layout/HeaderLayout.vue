@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import NavigationBar from '@components/layout/NavigationBar.vue'
 
 const title = ref('Jean-Marc TURPIN')
 const visibleTitle = ref('')
@@ -11,7 +12,7 @@ const showLetter = (index: number) => {
 
 const revealTitle = () => {
   let index = 0
-  const interval = [200, 300, 250, 350, 280] // intervalles irréguliers
+  const interval = [200, 300, 250, 350, 280]
 
   const showNextLetter = () => {
     if (index < title.value.length) {
@@ -41,11 +42,12 @@ onMounted(() => {
       </div>
     </div>
   </header>
+
+  <NavigationBar />
 </template>
 
 <style scoped lang="scss">
 header {
-  border: 1px solid red;
   height: 80vh;
   display: flex;
   justify-content: center;

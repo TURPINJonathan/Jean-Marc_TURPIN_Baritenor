@@ -1,21 +1,64 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import BiographyView from '@views/BiographyView.vue';
+import BlogView from '@views/BlogView.vue';
+import ContactView from '@views/ContactView.vue';
+import HomeView from '@views/HomeView.vue';
+import LinkView from '@views/LinkView.vue';
+import MediaView from '@views/MediaView.vue';
+import MetroView from '@views/MetroView.vue';
+import ProjectView from '@views/ProjectView.vue';
+import ShopView from '@views/ShopView.vue';
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'home',
-    //   component: HomeView
-    // },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      // component: () => import('../views/AboutView.vue')
-    // }
+    {
+      path: '/',
+      name: 'Page d\'accueil',
+      component: HomeView,
+    },
+    {
+      path: '/biographie',
+      name: 'Biographie',
+      component: BiographyView
+    },
+    {
+      path: '/blog',
+      name: 'Blog',
+      component: BlogView
+    },
+    {
+      path: '/contact',
+      name: 'Contact',
+      component: ContactView
+    },
+    {
+      path: '/liens',
+      name: 'Liens',
+      component: LinkView
+    },
+    {
+      path: '/media',
+      name: 'Médias',
+      component: MediaView
+    },
+    {
+      path: '/metro',
+      name: 'Métro',
+      component: MetroView
+    },
+    {
+      path: '/projets',
+      name: 'Projets',
+      component: ProjectView
+    },
+    {
+      path: '/boutique',
+      name: 'Boutique',
+      component: ShopView
+    },
   ]
 })
 
