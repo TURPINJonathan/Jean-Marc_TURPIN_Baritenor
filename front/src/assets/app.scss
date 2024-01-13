@@ -11,6 +11,14 @@
   font-style: normal;
 }
 
-#app {
-  font-family: $font-remington;
+body #app {
+  width: 100vw;
+  height: 100vh;
+
+  h1 {
+    font-family: $font-remington;
+    font-weight: lighter;
+    font-size: 3rem;
+    letter-spacing: 0.6rem;
+  }
 }
