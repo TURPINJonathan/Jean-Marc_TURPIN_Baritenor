@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import NavigationBar from '@components/layout/NavigationBar.vue'
+import ScenePicture from '@assets/pictures/scene_resize.jpg'
 
 const title = ref('Jean-Marc TURPIN')
 const visibleTitle = ref('')
@@ -31,7 +32,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <header>
+  <header :style="`background-image: url(${ScenePicture})`">
     <div>
       <h1>{{ visibleTitle }}</h1>
       <p @mouseover="isDefinitionShow = true" @mouseleave="isDefinitionShow = false">Bariténor</p>
@@ -48,15 +49,20 @@ onMounted(() => {
 
 <style scoped lang="scss">
 header {
-  height: 80vh;
+  height: 75vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-clip: content-box;
 
   div {
     h1 {
       text-align: center;
+      margin-top: 100px;
     }
 
     p {
@@ -64,6 +70,9 @@ header {
       letter-spacing: 0.6rem;
       font-size: 2rem;
       text-transform: uppercase;
+      &:hover {
+        cursor: help;
+      }
     }
 
     div {
