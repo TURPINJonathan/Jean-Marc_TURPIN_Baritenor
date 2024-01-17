@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 
 import MetropolitainButton from '@assets/pictures/navigationButtons/metropolitain_resize.jpg'
