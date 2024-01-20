@@ -1,0 +1,35 @@
+@import "@assets/reset.css";
+@import '@assets/variables.scss';
+
+// FONTS
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vujahday+Script&display=swap');
+
+@font-face {
+  font-family: 'Remington_Noiseless';
+  src: url('./Remington-Noiseless.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body #app {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+
+  h1 {
+    font-family: $font-remington;
+    font-weight: lighter;
+    font-size: 3rem;
+    letter-spacing: 0.6rem;
+  }
+    h2 {
+      font-family: 'Remington_Noiseless', 'Special Elite', sans-serif;
+      font-weight: normal;
+      margin-bottom: 0.5rem;
+    }
+  main {
+    background-color: $bg-dark;
+    color: $ft-light;
+  }
+}
