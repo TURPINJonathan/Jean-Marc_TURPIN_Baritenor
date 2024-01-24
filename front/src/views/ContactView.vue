@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import type MessageType from '@types/messageType'
-import JMPupitre from '@assets/pictures/jm_pupitre.jpg'
-import HomeButton from '@components/common/HomeButton.vue'
+import { ref } from "vue";
+import type MessageType from "@types/messageType";
+import JMPupitre from "@assets/pictures/jm_pupitre.jpg";
+import HomeButton from "@components/common/HomeButton.vue";
 
 const message = ref<MessageType>({
-  contactTitle: '',
-  contactLastname: '',
-  contactFirstname: '',
-  contactEmail: '',
-  contactSubject: '',
-  messageContent: ''
-})
-const isMessageReadyToSend = ref<boolean>(false)
+  contactTitle: "",
+  contactLastname: "",
+  contactFirstname: "",
+  contactEmail: "",
+  contactSubject: "",
+  messageContent: "",
+});
+const isMessageReadyToSend = ref<boolean>(false);
 
 const submitMessage = (event) => {
-  event.preventDefault()
+  event.preventDefault();
   // try {
   //   // Effectuer une requête fictive vers un backend (remplacez l'URL par la vôtre)
   //   const response = await axios.post('https://votre-backend.com/api/form', message.value);
@@ -25,15 +25,19 @@ const submitMessage = (event) => {
   // } catch (error) {
   //   console.error('Erreur lors de l\'envoi du formulaire:', error);
   // }
-  console.log(message)
-}
+  console.log(message);
+};
 </script>
 
 <template>
   <main>
     <section>
       <article>
-        <form name="contactForm" id="contact_form" @submit.prevent="submitMessage">
+        <form
+          name="contactForm"
+          id="contact_form"
+          @submit.prevent="submitMessage"
+        >
           <h2>Contactez-nous</h2>
 
           <div id="form_client-information">
@@ -137,7 +141,7 @@ const submitMessage = (event) => {
   </main>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 main section article {
   display: flex;
   // justify-content: space-between;

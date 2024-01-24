@@ -1,11 +1,20 @@
 import type DateType from '@types/datesType'
 
 export function useDateUtils() {
-  function getCurrentDate() {
+  /**
+   * Usage: Get the current date
+   */
+  function getCurrentDate(): Date {
     return new Date();
   }
 
-  function getMonth(date = getCurrentDate(), format: DateType['formats'] = 'long') {
+  /**
+   * Usage: Get the current month (by default) or other date with specific format (long by default)
+   * @param date 
+   * @param format 
+   * @returns string
+   */
+  function getMonth(date: Date = getCurrentDate() as Date, format: DateType['formats'] = 'long'): string {
     const validFormats = ["numeric", "2-digit", "narrow", "short", "long"] as DateType['formats'][];
 
     if (!validFormats.includes(format)) {
@@ -17,7 +26,13 @@ export function useDateUtils() {
     return date.toLocaleDateString('fr-FR', options);
   }
 
-  function getYear(date = getCurrentDate(), format: DateType['formats'] = 'numeric') {
+  /**
+   * Usage: Get the current year (by default) or other date with specific format (numeric by default)
+   * @param date 
+   * @param format 
+   * @returns 
+   */
+  function getYear(date: Date = getCurrentDate() as Date, format: DateType['formats'] = 'numeric'): string {
     const validFormats = ["numeric", "2-digit", "narrow", "short", "long"] as DateType['formats'][];
 
     if (!validFormats.includes(format)) {

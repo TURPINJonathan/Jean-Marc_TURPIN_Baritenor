@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { useScrollTo } from "@/utils/scrollToUtils";
+import { RouterLink } from "vue-router";
+
+const { scrollToTopPage } = useScrollTo();
 </script>
 
 <template>
   <section>
-    <RouterLink to="/">Accueil</RouterLink>
+    <RouterLink to="/" @click="scrollToTopPage">Accueil</RouterLink>
   </section>
 </template>
 
