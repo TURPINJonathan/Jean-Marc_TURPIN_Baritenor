@@ -31,5 +31,13 @@ body #app {
   main {
     background-color: $bg-dark;
     color: $ft-light;
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+    }
+
+    input, textarea, select {
+      border: none;
+    }
   }
 }
