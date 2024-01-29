@@ -144,9 +144,8 @@ const submitMessage = (event) => {
 <style scoped lang="scss">
 main section article {
   display: flex;
-  // justify-content: space-between;
   flex-wrap: wrap;
-  padding: 20px 3rem 20px 3rem;
+  padding: 20px 3rem 0 3rem;
   gap: 20px;
 
   #contact_form {

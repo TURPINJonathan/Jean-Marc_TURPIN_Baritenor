@@ -16,7 +16,8 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 1rem;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
 
   & > * {
     width: 250px;
