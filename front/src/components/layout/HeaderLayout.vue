@@ -1,57 +1,60 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
-import NavigationBar from '@components/layout/NavigationBar.vue'
-import ScenePicture from '@assets/pictures/scene_resize.jpg'
-import { useRoute } from 'vue-router'
+import { ref, onMounted, watch } from "vue";
+import NavigationBar from "@components/layout/NavigationBar.vue";
+import ScenePicture from "@assets/pictures/scene_resize.jpg";
+import { useRoute } from "vue-router";
 
-const route = useRoute()
-const title = ref(route.name)
-const visibleTitle = ref<string>('')
-const isDefinitionShow = ref<boolean>(false)
-const revealTitleTimeoutId = ref<number | null>(null)
+const route = useRoute();
+const title = ref(route.name);
+const visibleTitle = ref<string>("");
+const isDefinitionShow = ref<boolean>(false);
+const revealTitleTimeoutId = ref<number | null>(null);
 
 const showLetter = (index: number): void => {
-  if (typeof route.name === 'string' && title.value === route.name) {
-    visibleTitle.value += title.value.charAt(index as number)
+  if (typeof route.name === "string" && title.value === route.name) {
+    visibleTitle.value += title.value.charAt(index as number);
   }
-}
+};
 
 const revealTitle = (): void => {
-  visibleTitle.value = '' as string
-  let index = 0 as number
-  const interval = [200, 300, 250, 350, 280] as number[]
+  visibleTitle.value = "" as string;
+  let index = 0 as number;
+  const interval = [200, 300, 250, 350, 280] as number[];
 
   const showNextLetter = () => {
-    if ((title.value as string) && (index as number) < (title.value as string).length) {
-      showLetter(index as number)
-      index++ as number
+    if (
+      (title.value as string) &&
+      (index as number) < (title.value as string).length
+    ) {
+      showLetter(index as number);
+      index++ as number;
       revealTitleTimeoutId.value = setTimeout(
         showNextLetter,
         interval[Math.floor(Math.random() * interval.length)]
-      )
+      );
     }
-  }
+  };
 
-  showNextLetter()
-}
+  showNextLetter();
+};
 
 onMounted(() => {
-  revealTitle()
+  revealTitle();
 
   // Watch for changes in route.name
   watch(
     () => route.name,
     (newName) => {
       // Reset and restart revealTitle when route.name changes
-      title.value = newName
+      title.value = newName;
       // Clear the existing timeout
       if (revealTitleTimeoutId.value !== null) {
-        clearTimeout(revealTitleTimeoutId.value)
+        clearTimeout(revealTitleTimeoutId.value);
       }
-      revealTitle()
+      revealTitle();
     }
-  )
-})
+  );
+});
 </script>
 
 <template>
@@ -59,7 +62,12 @@ onMounted(() => {
     <div>
       <h1>{{ visibleTitle }}</h1>
       <template v-if="route.path === '/'">
-        <p @mouseover="isDefinitionShow = true" @mouseleave="isDefinitionShow = false">Bariténor</p>
+        <p
+          @mouseover="isDefinitionShow = true"
+          @mouseleave="isDefinitionShow = false"
+        >
+          Bariténor
+        </p>
         <div>
           <small v-show="isDefinitionShow">
             Voix masculine intermédiaire entre le ténor et la basse.
@@ -110,9 +118,3 @@ header {
   }
 }
 </style>
-
-<script lang="ts">
-export default {
-  name: 'HeaderLayout'
-}
-</script>

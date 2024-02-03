@@ -45,13 +45,13 @@ const router = createRouter({
       component: MediaView
     },
     {
-      path: '/metro',
+      path: '/metropolitain',
       name: 'Métro',
       component: MetroView
     },
     {
-      path: '/projets',
-      name: 'Projets',
+      path: '/a-venir',
+      name: 'A venir',
       component: ProjectView
     },
     {

@@ -1,47 +1,27 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
-import { ref } from 'vue'
+import { RouterLink } from "vue-router";
+import { ref } from "vue";
 
-import MetropolitainButton from '@assets/pictures/navigationButtons/metropolitain_resize.jpg'
-import ContactButton from '@assets/pictures/navigationButtons/contact_resize.jpg'
-import IncommingButton from '@assets/pictures/navigationButtons/coming-soon_resize.jpg'
+import { useNavStore } from "@/stores/useNavStore";
 
-const activeButton = ref('')
+const navigationStore = useNavStore();
+const activeButton = ref<string>("");
 </script>
 
 <template>
   <nav>
-    <RouterLink to="/biographie" activeClass="active-page">Bio</RouterLink>
     <RouterLink
-      to="/metro"
+      v-for="(module, index) in navigationStore.modules"
+      :key="index"
+      :to="module.path"
       activeClass="active-page"
-      :style="`background-image: url(${MetropolitainButton})`"
-      @mouseover="activeButton = 'metro'"
+      :style="`background-image: url(${module.pictureURL})`"
+      @mouseover="activeButton = module.label"
       @mouseleave="activeButton = ''"
     >
-      <span v-if="activeButton === 'metro' || $route.path === '/metro'">Métropolitain</span>
-    </RouterLink>
-    <RouterLink to="/media" activeClass="active-page">Média</RouterLink>
-    <RouterLink
-      to="/projets"
-      activeClass="active-page"
-      :style="`background-image: url(${IncommingButton})`"
-      @mouseover="activeButton = 'coming-soon'"
-      @mouseleave="activeButton = ''"
-    >
-      <span v-if="activeButton === 'coming-soon' || $route.path === '/projets'">à venir</span>
-    </RouterLink>
-    <RouterLink to="/liens" activeClass="active-page">Liens</RouterLink>
-    <RouterLink to="/blog" activeClass="active-page">Blog</RouterLink>
-    <RouterLink to="/boutique" activeClass="active-page">Boutique</RouterLink>
-    <RouterLink
-      to="/contact"
-      activeClass="active-page"
-      :style="`background-image: url(${ContactButton})`"
-      @mouseover="activeButton = 'contact'"
-      @mouseleave="activeButton = ''"
-    >
-      <span v-if="activeButton === 'contact' || $route.path === '/contact'">Contact</span>
+      <span v-if="activeButton === module.label || $route.path === module.path">
+        {{ module.label }}
+      </span>
     </RouterLink>
   </nav>
 </template>
@@ -90,9 +70,3 @@ nav {
   }
 }
 </style>
-
-<script lang="ts">
-export default {
-  name: 'NavigationBar'
-}
-</script>
