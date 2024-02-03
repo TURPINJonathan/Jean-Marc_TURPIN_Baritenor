@@ -1,14 +1,21 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, defineProps, defineEmits } from "vue";
 import { useDateUtils } from "@/utils/dateUtils";
+import type { EventType } from "@/types/eventType";
 
-const { getCurrentDate, getMonth, getYear } = useDateUtils();
+const { getCurrentDate, getMonth, getYear, isSameDay } = useDateUtils();
 
-const currentDate = ref(getCurrentDate());
+const currentDate = ref<Date>(getCurrentDate());
+const selectedDate = ref<Date | null>(null);
 const currentMonth = computed(() => getMonth(currentDate.value));
 const currentYear = computed(() => getYear(currentDate.value));
 const daysOfWeek = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
 
+const emit = defineEmits<{
+  (e: "dateClicked", date: Date): void;
+}>();
+
+const props = defineProps(["eventsData"]);
 const generateCalendar = () => {
   type CalendarMatrix = (Date | null)[][];
 
@@ -49,6 +56,8 @@ const generateCalendar = () => {
   return calendarMatrix;
 };
 
+const calendar = ref(generateCalendar());
+
 const navigateToPreviousMonth = () => {
   currentDate.value = new Date(
     currentDate.value.getFullYear(),
@@ -57,6 +66,7 @@ const navigateToPreviousMonth = () => {
   );
   calendar.value = generateCalendar();
 };
+true;
 
 const navigateToNextMonth = () => {
   currentDate.value = new Date(
@@ -66,8 +76,6 @@ const navigateToNextMonth = () => {
   );
   calendar.value = generateCalendar();
 };
-
-const calendar = ref(generateCalendar());
 
 const isCurrentDay = (date: Date) => {
   const today = getCurrentDate();
@@ -83,35 +91,31 @@ const isPastDays = (date: Date) => {
 };
 
 const handleDateClick = (date: Date) => {
-  console.log("Clicked on", date.getDate());
+  emit("dateClicked", date);
+  selectedDate.value = date;
 };
-
-// TODO Attention au format lors de l'utilisation de l'API
-const eventDates: Date[] = [
-  new Date(currentDate.value.getFullYear(), currentDate.value.getMonth(), 30),
-  new Date(currentDate.value.getFullYear(), 2, 20), // 20 Février 2024
-];
 
 const isEventDate = (date: Date) => {
-  return eventDates.some((highlightedDate) => isSameDay(date, highlightedDate));
-};
-
-const isSameDay = (date1: Date, date2: Date) => {
-  return (
-    date1.getDate() === date2.getDate() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getFullYear() === date2.getFullYear()
+  return props.eventsData.some((event: EventType) =>
+    isSameDay(date, event.date)
   );
 };
-
 </script>
 
 <template>
   <div>
     <h2>
-        <font-awesome-icon :icon="['fas', 'chevron-left']" @click="navigateToPreviousMonth" class="calendar_navigation" />
-        <span>{{ currentMonth }} {{ currentYear }}</span>
-        <font-awesome-icon :icon="['fas', 'chevron-right']" @click="navigateToNextMonth" class="calendar_navigation" />
+      <font-awesome-icon
+        :icon="['fas', 'chevron-left']"
+        @click="navigateToPreviousMonth"
+        class="calendar_navigation"
+      />
+      <span>{{ currentMonth }} {{ currentYear }}</span>
+      <font-awesome-icon
+        :icon="['fas', 'chevron-right']"
+        @click="navigateToNextMonth"
+        class="calendar_navigation"
+      />
     </h2>
 
     <table>
@@ -127,9 +131,11 @@ const isSameDay = (date1: Date, date2: Date) => {
             v-for="(date, dateIndex) in week"
             :key="date ? `${(date as Date).getDate()}_${index}` : dateIndex"
             :class="{
-              'date_today': date && isCurrentDay(date),
-              'date_past': date && isPastDays(date),
-              'date_event': date && isEventDate(date),
+              date_today: date && isCurrentDay(date),
+              date_past: date && isPastDays(date),
+              date_event: date && isEventDate(date),
+              date_selected:
+                date && selectedDate && isSameDay(date, selectedDate),
             }"
             @click="handleDateClick(date as Date)"
           >
@@ -173,19 +179,31 @@ div {
     }
 
     .date_today {
-      color: red !important;
+      color: blue !important;
     }
-  
+
     .date_past {
       color: rgb(118, 118, 118);
     }
-  
+
+    .date_event {
+      cursor: pointer;
+    }
+
     .date_event span {
       border-radius: 50%;
-      background-color: blue;
+      margin: auto;
+      border: red 1px solid;
       font-weight: bold;
-      padding: 0.2rem;
-      cursor: pointer;
+      width: 1.3rem;
+      height: 1.3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .date_selected span {
+      background-color: red;
     }
   }
 }
