@@ -16,7 +16,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'Page d\'accueil',
+      name: 'Jean-Marc TURPIN',
       component: HomeView,
     },
     {
@@ -45,13 +45,13 @@ const router = createRouter({
       component: MediaView
     },
     {
-      path: '/metro',
+      path: '/metropolitain',
       name: 'Métro',
       component: MetroView
     },
     {
-      path: '/projets',
-      name: 'Projets',
+      path: '/a-venir',
+      name: 'A venir',
       component: ProjectView
     },
     {

@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { useDateUtils } from '@utils/dateUtils'
+import { useDateUtils } from "@utils/dateUtils";
 
-const date = useDateUtils()
+const date = useDateUtils();
 </script>
 
 <template>
   <footer>
-    &copy;Copyright&nbsp;<span style="text-transform: capitalize">{{ date.getMonth() }}</span>
+    &copy;Copyright&nbsp;<span style="text-transform: capitalize">{{
+      date.getMonth()
+    }}</span>
     &nbsp;{{ date.getYear() }}
   </footer>
 </template>
@@ -21,9 +23,3 @@ footer {
   padding-bottom: 1rem;
 }
 </style>
-
-<script lang="ts">
-export default {
-  name: 'FooterLayout'
-}
-</script>

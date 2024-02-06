@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import JMProfilPicture from '@assets/pictures/jm_profil.jpg'
+import JMProfilPicture from "@assets/pictures/jm_profil.jpg";
 </script>
 
 <template>
@@ -11,17 +11,20 @@ import JMProfilPicture from '@assets/pictures/jm_profil.jpg'
 
           <p>C’est avec un immense plaisir que je vous accueille ici.</p>
           <p>
-            Le chant et la musique plus généralement est un moyen de partager des moments mais aussi
-            de raviver des sentiments, de suspendre le temps, de se redécouvrir ou se découvrir,
-            d’aimer, de vibrer…
+            Le chant et la musique plus généralement est un moyen de partager
+            des moments mais aussi de raviver des sentiments, de suspendre le
+            temps, de se redécouvrir ou se découvrir, d’aimer, de vibrer…
           </p>
           <p>
-            Entrez et promenez-vous dans cet espace virtuel et c’est certain, nous allons nous
-            rencontrer …
+            Entrez et promenez-vous dans cet espace virtuel et c’est certain,
+            nous allons nous rencontrer …
           </p>
           <p>Jean Marc Turpin</p>
         </div>
-        <div id="jm-message_picture" :style="`background-image: url(${JMProfilPicture})`"></div>
+        <div
+          id="jm-message_picture"
+          :style="`background-image: url(${JMProfilPicture})`"
+        ></div>
       </article>
     </section>
 
@@ -52,7 +55,7 @@ main section {
       font-size: 20px;
 
       & > * {
-        font-family: 'Vujahday Script', cursive !important;
+        font-family: "Vujahday Script", cursive !important;
       }
 
       h2 {
