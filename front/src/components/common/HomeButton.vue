@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useScrollTo } from "@/utils/scrollToUtils";
+import { useScrollTo } from "@utils/scrollToUtils";
 import { RouterLink } from "vue-router";
 
 const { scrollToTopPage } = useScrollTo();
