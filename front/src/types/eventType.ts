@@ -1,9 +1,22 @@
+export interface EventTypeType {
+  id: number;
+  label: string;
+}
+
+export interface EventPlaceType {
+  id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  city: string;
+  eventType: EventTypeType;
+}
+
 export interface  EventType  {
-  label: string,
-  details?: string,
-  geoCoordinates: number[],
-  type: string,
-  date: Date,
-  startAt: string,
-  endAt?: string
+  id: number;
+  name: string;
+  details?: string;
+  eventPlace?: EventPlaceType;
+  startAt: Date;
+  endAt: string;
 }
