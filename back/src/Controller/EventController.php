@@ -83,4 +83,16 @@ class EventController extends AbstractController
 
         return $this->json($events, Response::HTTP_OK, [], ['groups' => 'event_get']);
     }
+
+    #[Route('/api/event/future', name: 'event_in_future', methods: ['GET'])]
+    public function eventInfuture(EventRepository $eventRepository): Response
+    {
+        $events = $eventRepository->finEventsInFuture();
+
+        if (!$events) {
+            throw new NoResultException("No results found");
+        }
+
+        return $this->json($events, Response::HTTP_OK, [], ['groups' => 'event_get']);
+    }
 }

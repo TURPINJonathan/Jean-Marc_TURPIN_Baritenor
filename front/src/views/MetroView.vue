@@ -1,53 +1,40 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import type { EventType } from "@/types/eventType";
-import { useDateUtils } from "@/utils/dateUtils";
+import { ref, onMounted } from "vue";
+import type { EventType } from "@types/eventType";
+import { useDateUtils } from "@utils/dateUtils";
 import HomeButton from "@components/common/HomeButton.vue";
 import Calendar from "@components/Calendar.vue";
 import MapVue from "@components/Map.vue";
+import { useApi } from "@composables/callRoutes";
 
 const { isSameDay } = useDateUtils();
+const { get } = useApi();
 
-let eventsData: EventType[] = [
-  {
-    label: "Gare Saint lazare",
-    details: "A côté de l'épicerie",
-    geoCoordinates: [48.8566, 2.3522],
-    type: "metro",
-    date: new Date(2024, 0, 31),
-    startAt: "15:00",
-    endAt: "18:00",
-  },
-  {
-    label: "Fête de la musique",
-    details: "Salle des fêtes de Wavrin",
-    geoCoordinates: [50.5677047, 2.9407297],
-    type: "concert",
-    date: new Date(2024, 1, 24),
-    startAt: "10:30",
-    endAt: "13:00",
-  },
-  {
-    label: "Trocadéro",
-    details:
-      "Retrouvez moi à l'intersection entre l'épicerie et les distributeurs de tickets !",
-    geoCoordinates: [48.865, 2.355],
-    type: "metro",
-    date: new Date(2024, 1, 11),
-    startAt: "13:00",
-    endAt: "15:00",
-  },
-];
+const eventsData = ref<EventType[]>([]);
+
+onMounted(async () => {
+  const data = await get("event/future");
+  if (data && Array.isArray(data)) {
+    eventsData.value = data as EventType[];
+  }
+});
 
 let mapCenterCoordinates = ref([48.8566, 2.3522]);
 
 const updateMapPosition = (selectedDate: Date) => {
-  const currentEvent = eventsData.find((event) =>
-    isSameDay(selectedDate, event.date)
+  const currentEvent = eventsData.value.find((event: EventType) =>
+    isSameDay(selectedDate, event.startAt)
   );
 
-  if (currentEvent) {
-    mapCenterCoordinates.value = currentEvent.geoCoordinates;
+  if (
+    currentEvent &&
+    currentEvent?.eventPlace?.longitude &&
+    currentEvent?.eventPlace?.longitude
+  ) {
+    mapCenterCoordinates.value = [
+      currentEvent.eventPlace.longitude,
+      currentEvent.eventPlace.latitude,
+    ];
   }
 };
 </script>
