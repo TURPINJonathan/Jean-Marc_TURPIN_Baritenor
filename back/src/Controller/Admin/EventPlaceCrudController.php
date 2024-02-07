@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
 class EventPlaceCrudController extends AbstractCrudController
 {
@@ -44,11 +45,11 @@ class EventPlaceCrudController extends AbstractCrudController
                 ->setHelp('100 caractères maximum')
                 ->setRequired(true)
                 ->setMaxLength(100),
-            TextField::new('longitude')
+            NumberField::new('longitude')
                 ->setColumns(6)
                 ->setLabel('Longitude')
                 ->setRequired(false),
-            TextField::new('latitude')
+            NumberField::new('latitude')
                 ->setColumns(6)
                 ->setLabel('Latitude')
                 ->setRequired(false),

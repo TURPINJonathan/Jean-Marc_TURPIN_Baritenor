@@ -2,7 +2,7 @@
 import { RouterLink } from "vue-router";
 import { ref } from "vue";
 
-import { useNavStore } from "@/stores/useNavStore";
+import { useNavStore } from "@stores/useNavStore";
 
 const navigationStore = useNavStore();
 const activeButton = ref<string>("");
