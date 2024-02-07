@@ -97,7 +97,7 @@ const handleDateClick = (date: Date) => {
 
 const isEventDate = (date: Date) => {
   return props.eventsData.some((event: EventType) =>
-    isSameDay(date, event.date)
+    isSameDay(date, event.startAt)
   );
 };
 </script>

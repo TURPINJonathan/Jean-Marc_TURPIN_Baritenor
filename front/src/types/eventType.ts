@@ -9,6 +9,7 @@ export interface EventPlaceType {
   latitude: number;
   longitude: number;
   city: string;
+  eventType: EventTypeType;
 }
 
 export interface  EventType  {

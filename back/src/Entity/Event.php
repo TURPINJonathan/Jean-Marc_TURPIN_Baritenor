@@ -46,6 +46,17 @@ class Event
         $this->articles = new ArrayCollection();
     }
 
+    private function isBackOffice(): bool
+    {
+        $url = $_SERVER['REQUEST_URI'];
+
+        if (strpos($url, '/admin') !== false) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,10 +98,14 @@ class Event
         return $this;
     }
 
-    public function getStartAt(): ?string
+    public function getStartAt(): string|\DateTimeImmutable|null
     {
         if ($this->startAt === null) {
             return null;
+        }
+
+        if ($this->isBackOffice()) {
+            return $this->startAt;
         }
 
         return $this->startAt->format('D M d Y H:i:s \G\M\T O (e)');
@@ -103,13 +118,18 @@ class Event
         return $this;
     }
 
-    public function getEndAt(): ?string
+    public function getEndAt(): string|\DateTimeImmutable|null
     {
-        if ($this->startAt === null) {
+
+        if ($this->endAt === null) {
             return null;
         }
 
-        return $this->startAt->format('D M d Y H:i:s \G\M\T O (e)');
+        if ($this->isBackOffice()) {
+            return $this->endAt;
+        }
+
+        return $this->endAt->format('D M d Y H:i:s \G\M\T O (e)');
     }
 
     public function setEndAt(\DateTimeImmutable $endAt): static

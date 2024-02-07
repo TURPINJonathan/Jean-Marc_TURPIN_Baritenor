@@ -69,6 +69,18 @@ class EventRepository extends ServiceEntityRepository
         return $result;
     }
 
+    public function finEventsInFuture()
+    {
+        $currentDate = new \DateTime;
+
+        return $this->createQueryBuilder('e')
+            ->where('e.endAt > :currentDate')
+            ->orderBy('e.startAt', 'DESC')
+            ->setParameter('currentDate', $currentDate)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findEventsByName($name)
     {
         return $this->createQueryBuilder('e')

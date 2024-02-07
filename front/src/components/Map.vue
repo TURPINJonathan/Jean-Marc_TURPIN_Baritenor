@@ -7,13 +7,15 @@ import LyricLogo from "@assets/pictures/lyrics_logo.png";
 import type { EventType } from "@types/eventType";
 
 const props = defineProps(["eventsData", "centerCoordinates"]);
-const { formatDate } = useDateUtils();
+const { formatDate, formatTime } = useDateUtils();
 
 const mapContainer = ref(null);
 let map: LeafletMap | null = null;
 
 onMounted(() => {
-  createMap();
+  if (props.eventsData.length > 0) {
+    createMap();
+  }
 });
 
 onBeforeUnmount(() => {
@@ -37,7 +39,7 @@ function createMap() {
 
   const metroMarker = (type: string) => {
     return new Icon({
-      iconUrl: type === "metro" ? MetroLogo : LyricLogo,
+      iconUrl: type === "métro" ? MetroLogo : LyricLogo,
       iconSize: [30, 30],
       iconAnchor: [15, 15],
     });
@@ -45,20 +47,25 @@ function createMap() {
 
   // Add event on map
   props.eventsData.forEach((event: EventType) => {
-    const marker = new Marker(event.geoCoordinates, {
-      icon: metroMarker(event.type),
-    }).addTo(map);
+    const marker = new Marker(
+      [event?.eventPlace?.longitude, event?.eventPlace?.latitude],
+      {
+        icon: metroMarker(event?.eventPlace?.eventType?.label ?? ""),
+      }
+    ).addTo(map);
     marker.bindPopup(`
     <p>
       <span style="font-size: 1rem; font-weight: bold">
-        ${event.label}
+        ${event.eventPlace?.name}
       </span>
       <br/>
       <span style="text-transform: capitalize">
-        ${formatDate(event.date)}
+        ${formatDate(event.startAt)}
       </span>
       <span>
-        &nbsp;entre&nbsp;${event.startAt}&nbsp;-&nbsp;${event.endAt}
+        &nbsp;entre&nbsp;${formatTime(event.startAt)}&nbsp;et&nbsp;${formatTime(
+      event.endAt
+    )}
       </span>
       <hr/>
     </p>
@@ -72,6 +79,14 @@ watch(
   (newCoordinates) => {
     if (map) {
       map.setView(newCoordinates, 17);
+    }
+  }
+);
+watch(
+  () => props.eventsData,
+  (newEventsData) => {
+    if (newEventsData.length > 0) {
+      createMap();
     }
   }
 );

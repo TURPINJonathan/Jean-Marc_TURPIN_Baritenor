@@ -6,7 +6,6 @@ export function useDateUtils() {
    */
   function getCurrentDate(): Date {
     return new Date();
-    // Wed Feb 07 2024 20:58:59 GMT+0100 (heure normale d’Europe centrale)
   }
 
   /**
@@ -45,32 +44,58 @@ export function useDateUtils() {
     return date.toLocaleDateString('fr-FR', options);
   }
 
-  function formatDate(date: Date, yearFormat: string = 'numeric', monthFormat: string = 'long', dayFormat: string = 'numeric', weekdayFormat: DateType = 'long') {
+  function formatTime(dateTime: Date | string, hourFormat: DateType['timeFormats'] = '2-digit', minuteFormat: DateType['timeFormats'] = '2-digit', ): string {
+    const options: Intl.DateTimeFormatOptions = {
+        hour: hourFormat,
+        minute: minuteFormat
+    };
+
+    if (typeof dateTime === 'string') {
+        dateTime = new Date(dateTime);
+    }
+
+    return dateTime.toLocaleTimeString('fr-FR', options);
+}
+
+  function formatDate(date: Date|string, yearFormat: string = 'numeric', monthFormat: string = 'long', dayFormat: string = 'numeric', weekdayFormat: DateType = 'long') {
     const options: Intl.DateTimeFormatOptions = {
       year: yearFormat as DateType,
       month: monthFormat as DateType,
       day: dayFormat as DateType,
       weekday: weekdayFormat as DateType,
     };
+
+    if (typeof date === 'string') {
+      date = new Date(date)
+    }
+    
     return date.toLocaleDateString("fr-FR", options);
   }
 
-  function isSameDay(date1: Date, date2: Date) {
-    if (!date1 || !date2) {
+  function isSameDay(dateFrom: Date, dateTo: Date) {
+    if (!dateFrom || !dateTo) {
       return false;
+    }
+
+    if (typeof dateTo === 'string') {
+      dateTo = new Date(dateTo);
+    }
+
+    if (typeof dateFrom === 'string') {
+      dateFrom = new Date(dateFrom);
     }
     
     return (
-      date1.getDate() === date2.getDate() &&
-      date1.getMonth() === date2.getMonth() &&
-      date1.getFullYear() === date2.getFullYear()
+      dateFrom.getDate() === dateTo.getDate() &&
+      dateFrom.getMonth() === dateTo.getMonth() &&
+      dateFrom.getFullYear() === dateTo.getFullYear()
     );
   };
 
-  function isSameMonth(date1: Date, date2: Date) {
+  function isSameMonth(dateFrom: Date, dateTo: Date) {
     return (
-      date1.getMonth() === date2.getMonth() &&
-      date1.getFullYear() === date2.getFullYear()
+      dateFrom.getMonth() === dateTo.getMonth() &&
+      dateFrom.getFullYear() === dateTo.getFullYear()
     );
   };
 
@@ -80,6 +105,7 @@ export function useDateUtils() {
     getYear,
     formatDate,
     isSameDay,
-    isSameMonth
+    isSameMonth,
+    formatTime
   };
 }
