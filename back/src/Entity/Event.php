@@ -87,9 +87,13 @@ class Event
         return $this;
     }
 
-    public function getStartAt(): ?\DateTimeImmutable
+    public function getStartAt(): ?string
     {
-        return $this->startAt;
+        if ($this->startAt === null) {
+            return null;
+        }
+
+        return $this->startAt->format('D M d Y H:i:s \G\M\T O (e)');
     }
 
     public function setStartAt(\DateTimeImmutable $startAt): static
@@ -99,9 +103,13 @@ class Event
         return $this;
     }
 
-    public function getEndAt(): ?\DateTimeImmutable
+    public function getEndAt(): ?string
     {
-        return $this->endAt;
+        if ($this->startAt === null) {
+            return null;
+        }
+
+        return $this->startAt->format('D M d Y H:i:s \G\M\T O (e)');
     }
 
     public function setEndAt(\DateTimeImmutable $endAt): static

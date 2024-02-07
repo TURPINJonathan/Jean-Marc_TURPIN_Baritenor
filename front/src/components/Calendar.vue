@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, defineProps, defineEmits } from "vue";
-import { useDateUtils } from "@/utils/dateUtils";
-import type { EventType } from "@/types/eventType";
+import { useDateUtils } from "@utils/dateUtils";
+import type { EventType } from "@types/eventType";
 
 const { getCurrentDate, getMonth, getYear, isSameDay } = useDateUtils();
 

@@ -29,13 +29,13 @@ class EventPlace
     #[ORM\OneToMany(mappedBy: 'eventPlace', targetEntity: Event::class)]
     private Collection $events;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(type: 'decimal', precision: 15, scale: 13)]
     #[Groups(['event_get'])]
-    private ?string $latitude = null;
+    private ?float $latitude = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(type: 'decimal', precision: 15, scale: 13)]
     #[Groups(['event_get'])]
-    private ?string $longitude = null;
+    private ?float $longitude = null;
 
     #[ORM\Column(length: 100)]
     #[Groups(['event_get'])]
@@ -105,24 +105,24 @@ class EventPlace
         return $this;
     }
 
-    public function getLatitude(): ?string
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    public function setLatitude(string $latitude): static
+    public function setLatitude(float $latitude): static
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    public function getLongitude(): ?string
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
-    public function setLongitude(string $longitude): static
+    public function setLongitude(float $longitude): static
     {
         $this->longitude = $longitude;
 

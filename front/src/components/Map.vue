@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { Map as LeafletMap, TileLayer, Marker, Icon } from "leaflet";
-import { useDateUtils } from "@/utils/dateUtils";
+import { useDateUtils } from "@utils/dateUtils";
 import MetroLogo from "@assets/pictures/metro_logo.png";
 import LyricLogo from "@assets/pictures/lyrics_logo.png";
-import type { EventType } from "@/types/eventType";
+import type { EventType } from "@types/eventType";
 
 const props = defineProps(["eventsData", "centerCoordinates"]);
 const { formatDate } = useDateUtils();

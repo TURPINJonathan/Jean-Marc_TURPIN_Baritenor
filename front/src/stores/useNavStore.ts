@@ -6,7 +6,7 @@ import ContactButton from '@assets/pictures/navigationButtons/contact_resize.jpg
 import ComingSoon from '@assets/pictures/navigationButtons/coming-soon_resize.jpg'
 import DefaultButton from '@assets/pictures/metro_logo.png'
 
-import type { NavigationModule } from '@/types/navigationType'
+import type { NavigationModule } from '@types/navigationType'
 
 export const useNavStore = defineStore('navigation', () => ({
   modules: ref<NavigationModule[]>([

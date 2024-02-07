@@ -1,12 +1,23 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import type { EventType } from "@/types/eventType";
-import { useDateUtils } from "@/utils/dateUtils";
+import { ref, onMounted } from "vue";
+import { EventTypeType, type EventType } from "@types/eventType";
+import { useDateUtils } from "@utils/dateUtils";
 import HomeButton from "@components/common/HomeButton.vue";
 import Calendar from "@components/Calendar.vue";
 import MapVue from "@components/Map.vue";
+import { useApi } from "@composables/callRoutes";
 
 const { isSameDay } = useDateUtils();
+const { get } = useApi();
+
+const eventsDataFromApi = ref<EventType[]>([]);
+
+onMounted(async () => {
+  const data = await get("event/list");
+  if (data && Array.isArray(data)) {
+    eventsDataFromApi.value = data as EventType[];
+  }
+});
 
 let eventsData: EventType[] = [
   {

@@ -6,6 +6,7 @@ export function useDateUtils() {
    */
   function getCurrentDate(): Date {
     return new Date();
+    // Wed Feb 07 2024 20:58:59 GMT+0100 (heure normale d’Europe centrale)
   }
 
   /**
