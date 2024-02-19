@@ -18,7 +18,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(17, 17, 17);
+  background-color: rgb(33, 33, 33);
   color: rgb(241, 241, 241);
   padding-bottom: 1rem;
 }

@@ -19,6 +19,7 @@
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.4.*",
         "symfony/maker-bundle": "^1.53",
+        "symfony/monolog-bundle": "^3.0",
         "symfony/property-access": "6.4.*",
         "symfony/property-info": "6.4.*",
         "symfony/runtime": "6.4.*",
@@ -77,5 +78,10 @@
             "require": "6.4.*",
             "docker": false
         }
+    },
+    "require-dev": {
+        "symfony/debug-bundle": "6.4.*",
+        "symfony/stopwatch": "6.4.*",
+        "symfony/web-profiler-bundle": "6.4.*"
     }
 }

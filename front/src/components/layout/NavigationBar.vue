@@ -31,11 +31,11 @@ nav {
   display: flex;
   justify-content: space-evenly;
   padding-top: 15px;
-  background-color: rgb(17, 17, 17);
+  background-color: rgb(33, 33, 33);
   color: rgb(241, 241, 241);
-  box-shadow: -1px -7px 26px 25px rgba(17, 17, 17, 1);
-  -webkit-box-shadow: -1px -7px 26px 25px rgba(17, 17, 17, 1);
-  -moz-box-shadow: -1px -7px 26px 25px rgba(17, 17, 17, 1);
+  box-shadow: -1px -7px 26px 25px rgba(33, 33, 33, 1);
+  -webkit-box-shadow: -1px -7px 26px 25px rgba(33, 33, 33, 1);
+  -moz-box-shadow: -1px -7px 26px 25px rgba(33, 33, 33, 1);
 
   & > * {
     min-width: calc(100% / 9);
@@ -59,7 +59,7 @@ nav {
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: rgba(17, 17, 17, 0.9);
+      background-color: rgba(33, 33, 33, 0.9);
       text-transform: uppercase;
       border-radius: 4px;
     }

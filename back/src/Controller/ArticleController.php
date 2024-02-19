@@ -8,6 +8,7 @@ use App\Repository\ArticleRepository;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,7 +20,7 @@ class ArticleController extends AbstractController
         $articles = $doctrine->getManager()->getRepository(Article::class)->findAll();
 
         if (!$articles) {
-            throw new NoResultException("No results found");
+            throw new NoResultException();
         }
 
         return $this->json($articles, Response::HTTP_OK, [], ['groups' => 'article_get']);
@@ -33,7 +34,7 @@ class ArticleController extends AbstractController
         $articleEvent = $article->getEvent();
 
         if (!$article) {
-            throw new NoResultException("No results found");
+            throw new NoResultException();
         }
 
         if (!empty($articleEvent) && count($articleEvent) > 0) {
@@ -49,7 +50,7 @@ class ArticleController extends AbstractController
         $articles = $article->findArticlesByTitle($title);
 
         if (!$articles) {
-            throw new NoResultException("No results found");
+            throw new NoResultException();
         }
 
         return $this->json($articles, Response::HTTP_OK, [], ['groups' => 'article_get']);
@@ -61,7 +62,7 @@ class ArticleController extends AbstractController
         $articles = $articleRepository->findArticlesByMonth($month, $year);
 
         if (!$articles) {
-            throw new NoResultException("No results found");
+            throw new NoResultException();
         }
 
         return $this->json($articles, Response::HTTP_OK, [], ['groups' => 'article_get']);
@@ -73,7 +74,7 @@ class ArticleController extends AbstractController
         $articles = $articleRepository->findArticlesByCategory($category);
 
         if (!$articles) {
-            throw new NoResultException("No results found");
+            throw new NoResultException();
         }
 
         return $this->json($articles, Response::HTTP_OK, [], ['groups' => 'article_get']);
@@ -85,7 +86,7 @@ class ArticleController extends AbstractController
         $articles = $articleRepository->findLastFiveArticles();
 
         if (!$articles) {
-            throw new NoResultException("No results found");
+            throw new NoResultException();
         }
 
         return $this->json($articles, Response::HTTP_OK, [], ['groups' => 'article_get']);
@@ -99,9 +100,53 @@ class ArticleController extends AbstractController
 
 
         if (!$event || !$articles) {
-            throw new NoResultException("Event not found");
+            throw new NoResultException();
         }
 
         return $this->json($articles, Response::HTTP_OK, [], ['groups' => ['article_get', 'article_with_event_get']]);
+    }
+
+    #[Route('/api/article/search', name: 'article_search', methods: ['GET'])]
+    public function articlesSearch(ArticleRepository $articleRepository, Request $request): Response
+    {
+        $params = $request->query->all();
+
+        dump($params);
+
+        $articlesFound = [];
+
+        if (isset($params['title']) && $params['title']) {
+            $articlesByTitle = $articleRepository->findArticlesByTitle($params['title']);
+            
+            foreach ($articlesByTitle as $articleTitle) {
+                array_push($articlesFound, $articleTitle);
+            }
+        }
+
+        if (isset($params['category_label']) && $params['category_label']) {
+            $articlesByCategory = $articleRepository->findArticlesByCategory($params['category_label']);
+            
+            foreach ($articlesByCategory as $articleByCategory) {
+                array_push($articlesFound, $articleByCategory);
+            }
+        }
+
+        if (isset($params['content']) && $params['content']) {
+            $articlesByContent = $articleRepository->findArticlesByContent($params['content']);
+            
+            foreach ($articlesByContent as $articleByContent) {
+                array_push($articlesFound, $articleByContent);
+            }
+        }
+
+        if (isset($params['event_name']) && $params['event_name']) {
+            $articlesByEventName = $articleRepository->findArticlesByEventName($params['event_name']);
+            
+            foreach ($articlesByEventName as $articleByEventName) {
+                array_push($articlesFound, $articleByEventName);
+            }
+        }
+
+        return $this->json($articlesFound, Response::HTTP_OK, [], ['groups' => ['article_get', 'article_with_event_get']]);
     }
 }
