@@ -12,9 +12,9 @@ export function useApi() {
   // To make a GET call
   async function get<T>(url: string, params?: string[]): Promise<ApiResponse<T>  | null> {
     try {
-      console.info(base_url + url);
-      console.log('params', params);
-      const response: AxiosResponse<ApiResponse<T>> = await axios.get(base_url + url,  { params: params } );
+      console.info('callRoute', base_url + url);
+      console.info('params', params);
+      const response: AxiosResponse<ApiResponse<T>> = await axios.get(base_url + url, { params: params } );
       return response.data;
     } catch (error) {
       console.error('Error while making GET request:', error);

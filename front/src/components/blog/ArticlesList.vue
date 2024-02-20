@@ -1,25 +1,36 @@
 <script setup lang="ts">
 import { useDateUtils } from "@utils/dateUtils";
+import { useApi } from '@composables/callRoutes';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const { formatDate } = useDateUtils()
 
 const props = defineProps(['articlesList'])
+const { get } = useApi();
+
+const handleClickOnArticle = async (id: number) => {
+  const data = await get(`article/${id}`);
+  console.log(data);
+};
 </script>
 
 <template>
   <section id="blog_article">
-    <article v-for="article in props.articlesList" :key="article.id">
-      <div class="article_title">
-        <h3>{{ article.title }}</h3>
-        <small>{{ formatDate(article.createdAt) }}</small>
-      </div>
-
-      
-      <div class="article_content">
-        <img src="https://placehold.co/600x400" alt="" srcset="" />
-        <div class="article_content-text" v-html="article.content" />
-      </div>
-    </article>
+    <router-link v-for="article in props.articlesList" :key="article.id" :to="'/blog/' + article.id">
+      <article>
+        <div class="article_title">
+          <h3>{{ article.title }}</h3>
+          <small>{{ formatDate(article.createdAt) }}</small>
+        </div>
+        
+        <div class="article_content">
+          <img src="https://placehold.co/600x400" alt="" srcset="" />
+          <div class="article_content-text" v-html="article.content" />
+        </div>
+      </article>
+    </router-link>
   </section>
 </template>
 
