@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Article;
-use App\Entity\Event;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -34,6 +33,17 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findArticlesByContent($content)
+    {
+        return $this->createQuerybuilder('a')
+            ->where('a.content LIKE :content')
+            ->orderBy('a.createdAt', 'DESC')
+            ->addOrderBy('a.content', 'ASC')
+            ->setParameter('content', '%' . $content . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findArticlesByMonth($month, $year)
     {
         $queryDate = new \DateTime($year . '-' . $month . '-01T00:00:00Z');
@@ -52,7 +62,7 @@ class ArticleRepository extends ServiceEntityRepository
         $result = $query->getResult();
 
         if (empty($result)) {
-            throw new NoResultException('Aucun événement trouvé pour le mois, l\'année et le lieu spécifiés.');
+            throw new NoResultException();
         }
 
         return $result;
@@ -85,6 +95,17 @@ class ArticleRepository extends ServiceEntityRepository
             ->join('a.event', 'e')
             ->where('e.id = :eventId')
             ->setParameter('eventId', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findArticlesByEventName($name)
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.event', 'e')
+            ->addOrderBy('a.title', 'ASC')
+            ->where('e.name = :eventName')
+            ->setParameter('eventName', '%' . $name . '%')
             ->getQuery()
             ->getResult();
     }

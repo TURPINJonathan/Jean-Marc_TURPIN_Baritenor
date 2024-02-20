@@ -1,20 +1,20 @@
 import axios, { type AxiosResponse } from 'axios';
 
-// Définition d'une interface pour le type de données que vous attendez en réponse
 interface ApiResponse<T> {
   data: T;
   status: number;
   statusText: string;
 }
 
-// Définition d'un hook pour gérer les appels API
 export function useApi() {
-  const base_url = 'http://127.0.0.1:8001' + '/api/';
+  const base_url = 'https://localhost:8001' + '/api/';
 
-  // Fonction pour effectuer un appel GET
-  async function get<T>(url: string): Promise<ApiResponse<T>  | null> {
+  // To make a GET call
+  async function get<T>(url: string, params?: string[]): Promise<ApiResponse<T>  | null> {
     try {
-      const response: AxiosResponse<ApiResponse<T>> = await axios.get(base_url + url);
+      console.info('callRoute', base_url + url);
+      console.info('params', params);
+      const response: AxiosResponse<ApiResponse<T>> = await axios.get(base_url + url, { params: params } );
       return response.data;
     } catch (error) {
       console.error('Error while making GET request:', error);
@@ -22,7 +22,7 @@ export function useApi() {
     }
   }
 
-  // Fonction pour effectuer un appel POST
+  // To make a POST call
   async function post<T>(url: string, data: any): Promise<ApiResponse<T>  | null> {
     try {
       const response: AxiosResponse<ApiResponse<T>> = await axios.post(base_url + url, data);

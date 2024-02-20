@@ -9,6 +9,7 @@ import MediaView from '@views/MediaView.vue';
 import MetroView from '@views/MetroView.vue';
 import ProjectView from '@views/ProjectView.vue';
 import ShopView from '@views/ShopView.vue';
+import Article from '@components/blog/Article.vue';
 
 
 const router = createRouter({
@@ -58,6 +59,11 @@ const router = createRouter({
       path: '/boutique',
       name: 'Boutique',
       component: ShopView
+    },
+    {
+      path: '/blog/:id',
+      name: 'Article',
+      component: Article
     },
   ]
 })

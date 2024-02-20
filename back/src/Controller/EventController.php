@@ -18,7 +18,7 @@ class EventController extends AbstractController
         $events = $doctrine->getManager()->getRepository(Event::class)->findAll();
 
         if (!$events) {
-            throw new NoResultException("No results found");
+            throw new NoResultException();
         }
 
         return $this->json($events, Response::HTTP_OK, [], ['groups' => 'event_get']);
@@ -30,7 +30,7 @@ class EventController extends AbstractController
         $event = $doctrine->getManager()->getRepository(Event::class)->find(['id' => $id]);
 
         if (!$event) {
-            throw new NoResultException("No results found");
+            throw new NoResultException();
         }
 
         return $this->json($event, Response::HTTP_OK, [], ['groups' => 'event_get']);
@@ -42,7 +42,7 @@ class EventController extends AbstractController
         $events = $eventRepository->findEventsByType($type);
 
         if (!$events) {
-            throw new NoResultException("No results found");
+            throw new NoResultException();
         }
 
         return $this->json($events, Response::HTTP_OK, [], ['groups' => 'event_get']);
@@ -54,7 +54,7 @@ class EventController extends AbstractController
         $events = $eventRepository->findEventsByPlace($place);
 
         if (!$events) {
-            throw new NoResultException("No results found");
+            throw new NoResultException();
         }
 
         return $this->json($events, Response::HTTP_OK, [], ['groups' => 'event_get']);
@@ -66,7 +66,7 @@ class EventController extends AbstractController
         $events = $eventRepository->findEventsByMonth($month, $year);
 
         if (!$events) {
-            throw new NoResultException("No results found");
+            throw new NoResultException();
         }
 
         return $this->json($events, Response::HTTP_OK, [], ['groups' => 'event_get']);
@@ -78,7 +78,7 @@ class EventController extends AbstractController
         $events = $eventRepository->findEventsByName($name);
 
         if (!$events) {
-            throw new NoResultException("No results found");
+            throw new NoResultException();
         }
 
         return $this->json($events, Response::HTTP_OK, [], ['groups' => 'event_get']);
@@ -90,7 +90,7 @@ class EventController extends AbstractController
         $events = $eventRepository->finEventsInFuture();
 
         if (!$events) {
-            throw new NoResultException("No results found");
+            throw new NoResultException();
         }
 
         return $this->json($events, Response::HTTP_OK, [], ['groups' => 'event_get']);
