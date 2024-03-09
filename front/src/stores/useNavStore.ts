@@ -40,11 +40,11 @@ export const useNavStore = defineStore('navigation', () => ({
       path: '/blog',
       pictureURL: DefaultButton
     },
-    {
-      label: 'boutique',
-      path: '/boutique',
-      pictureURL: DefaultButton
-    },
+    // {
+    //   label: 'boutique',
+    //   path: '/boutique',
+    //   pictureURL: DefaultButton
+    // },
     {
       label: 'contact',
       path: '/contact',

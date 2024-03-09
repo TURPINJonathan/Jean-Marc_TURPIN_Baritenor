@@ -92,6 +92,18 @@ class ArticleController extends AbstractController
         return $this->json($articles, Response::HTTP_OK, [], ['groups' => 'article_get']);
     }
 
+    #[Route('/api/article/last_one', name: 'article_last_one', methods: ['GET'])]
+    public function lastArticle(ArticleRepository $articleRepository): Response
+    {
+        $article = $articleRepository->findLastArticle();
+
+        if (!$article) {
+            throw new NoResultException();
+        }
+
+        return $this->json($article, Response::HTTP_OK, [], ['groups' => 'article_get']);
+    }
+
     #[Route('/api/article/by_event_{id}', name: 'article_by_event', methods: ['GET'], requirements: ['event' => '\d+'])]
     public function articleByEvent(ArticleRepository $article, ManagerRegistry $doctrine, $id): Response
     {

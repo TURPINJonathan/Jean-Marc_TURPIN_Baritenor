@@ -1,5 +1,20 @@
 <script setup lang="ts">
 import JMProfilPicture from "@assets/pictures/jm_profil.jpg";
+import { useApi } from "@composables/callRoutes";
+import type { ArticleType } from "@types/articleType";
+import { onMounted, ref } from "vue";
+
+const { get } = useApi();
+const lastArticle = ref<ArticleType | null>(null);
+
+onMounted(async () => {
+  const data = await get('article/last_one');
+  if (data) {
+    console.log(data);
+    lastArticle.value = data as ArticleType | unknown;
+    console.log(lastArticle);
+  }
+})
 </script>
 
 <template>
@@ -28,10 +43,20 @@ import JMProfilPicture from "@assets/pictures/jm_profil.jpg";
       </article>
     </section>
 
-    <section>
+    <section v-if="lastArticle">
       <article id="last-article">
         <h2>Dernier article</h2>
-        <p>Apercu du dernier article</p>
+        <h3>{{ lastArticle.title }}</h3>
+        <div class="last-article__categories">
+          <template v-for="category in lastArticle.category" :key="category.id">
+            <small>{{ category.label }}</small>
+          </template>
+        </div>
+        
+        <div class="lastArticle_content">
+          <img src="https://placehold.co/600x400" alt="" srcset="" />
+          <div class="lastArticle_content-text" v-html="lastArticle.content" />
+        </div>
       </article>
     </section>
   </main>
@@ -93,6 +118,37 @@ main section {
     margin-top: 20px;
     padding-bottom: 3rem;
     padding-left: 5rem;
+
+    .last-article__categories {
+      display: flex;
+      gap: 10px;
+      margin: 0.5rem auto;
+
+      small {
+        padding: 0.1rem 0.8rem;
+        border: 1px solid rgb(241, 241, 241);
+        border-radius: 50px;
+      }
+    }
+
+    .lastArticle_content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+
+      img {
+        flex: 25 1 200px;
+      }
+
+      .lastArticle_content-text {
+          flex: 75 1 200px;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 5;
+          -webkit-box-orient: vertical;
+          text-overflow: ellipsis;
+      }
+    }
   }
 }
 

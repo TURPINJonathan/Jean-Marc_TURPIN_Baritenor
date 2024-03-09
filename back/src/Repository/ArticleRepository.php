@@ -89,6 +89,15 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findLastArticle()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.createdAt', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function findArticlesByEvent($id)
     {
         return $this->createQueryBuilder('a')
