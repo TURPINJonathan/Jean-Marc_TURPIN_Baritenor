@@ -44,8 +44,8 @@ loadArticle();
               {{ article.title }}
             </h2>
             <span>
-              <template v-for="categorie in article.category" :key="categorie.id">
-                <small>{{ categorie.label }}</small>
+              <template v-for="category in article.category" :key="category.id">
+                <small>{{ category.label }}</small>
               </template>
             </span>
           </div>

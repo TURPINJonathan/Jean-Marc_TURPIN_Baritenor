@@ -35,6 +35,10 @@ const handleClickOnArticle = async (id: number) => {
 </template>
 
 <style scoped lang="scss">
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
   #blog_article {
     flex: 80 1 450px;
     display: flex;

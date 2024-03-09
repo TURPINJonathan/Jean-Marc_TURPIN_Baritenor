@@ -10,3 +10,10 @@ import FooterLayout from '@components/layout/FooterLayout.vue'
   <RouterView />
   <FooterLayout />
 </template>
+
+<style lang="scss">
+h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+</style>
