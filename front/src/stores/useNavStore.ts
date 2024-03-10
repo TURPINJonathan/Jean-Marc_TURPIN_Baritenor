@@ -50,5 +50,13 @@ export const useNavStore = defineStore('navigation', () => ({
       path: '/contact',
       pictureURL: ContactButton
     }  
-  ])
+  ]),
+
+  state: () => ({
+    title: ""
+  }),
+
+    setTitle(currentTitle: string) {
+      this.title = currentTitle
+    }
 }))

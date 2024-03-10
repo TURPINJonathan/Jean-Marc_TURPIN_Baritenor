@@ -1,6 +1,7 @@
 import axios, { type AxiosResponse } from 'axios';
 
 interface ApiResponse<T> {
+  title?: string;
   data: T;
   status: number;
   statusText: string;
