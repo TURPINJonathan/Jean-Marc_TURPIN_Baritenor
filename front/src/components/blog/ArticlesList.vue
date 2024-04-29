@@ -2,23 +2,26 @@
 import { useDateUtils } from "@utils/dateUtils";
 import { useApi } from '@composables/callRoutes';
 import { useRouter } from 'vue-router';
-
-const router = useRouter();
+import { useNavStore } from "@stores/useNavStore";
 
 const { formatDate } = useDateUtils()
 
 const props = defineProps(['articlesList'])
 const { get } = useApi();
+const navStore = useNavStore();
 
 const handleClickOnArticle = async (id: number) => {
   const data = await get(`article/${id}`);
-  console.log(data);
+  if (data && data.title) {
+    navStore.setTitle(data.title)
+  }
+  
 };
 </script>
 
 <template>
   <section id="blog_article">
-    <router-link v-for="article in props.articlesList" :key="article.id" :to="'/blog/' + article.id">
+    <router-link v-for="article in props.articlesList" :key="article.id" :to="'/blog/' + article.id" @click="handleClickOnArticle(article.id)">
       <article>
         <div class="article_title">
           <h3>{{ article.title }}</h3>

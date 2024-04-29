@@ -27,22 +27,19 @@ const activeButton = ref<string>("");
 </template>
 
 <style scoped lang="scss">
+@import '@assets/variables.scss';
 nav {
   display: flex;
   justify-content: space-evenly;
-  padding-top: 15px;
-  background-color: rgb(33, 33, 33);
-  color: rgb(241, 241, 241);
-  box-shadow: -1px -7px 26px 25px rgba(33, 33, 33, 1);
-  -webkit-box-shadow: -1px -7px 26px 25px rgba(33, 33, 33, 1);
-  -moz-box-shadow: -1px -7px 26px 25px rgba(33, 33, 33, 1);
+  gap: 15px;
+  margin-top: -3rem;
+  background-color: $bg-dark;
 
   & > * {
     min-width: calc(100% / 9);
     min-height: 70px;
     color: inherit;
     text-decoration: none;
-    border: 1px solid rgb(241, 241, 241); /* TO DELETE WITH PICTURES */
     border-radius: 4px;
     display: flex;
     justify-content: center;
@@ -59,14 +56,22 @@ nav {
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: rgba(33, 33, 33, 0.9);
       text-transform: uppercase;
       border-radius: 4px;
+
+      &:hover {
+        background-color: $bg-dark-opacity;
+        color: $ft-light;
+      }
     }
   }
 
   .active-page {
-    color: rgb(241, 241, 241);
+    span {
+      color: $ft-light;
+      font-weight: bold;
+      background-color: $bg-dark_opacity;
+    }
   }
 }
 </style>
