@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Article;
 use App\Entity\ArticleCategory;
-use App\Entity\ArticleLayout;
 use App\Entity\Event;
 use App\Entity\EventType;
 use App\Entity\EventPlace;
@@ -41,7 +40,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Articles', 'fas fa-newspaper')->setSubItems([
             MenuItem::linkToCrud('Mes articles', 'fas fa-newspaper', Article::class),
             MenuItem::linkToCrud('Catégories', 'fas fa-folder-tree', ArticleCategory::class),
-            MenuItem::linkToCrud('Layout', 'fas fa-palette', ArticleLayout::class), // TODO A retravailler
         ]);
     }
 }

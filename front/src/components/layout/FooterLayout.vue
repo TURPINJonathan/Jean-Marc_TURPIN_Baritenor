@@ -21,5 +21,6 @@ footer {
   background-color: rgb(33, 33, 33);
   color: rgb(241, 241, 241);
   padding-bottom: 1rem;
+  padding-top: 1rem;
 }
 </style>

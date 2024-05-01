@@ -16,4 +16,7 @@ export interface ArticleType {
   }
   createdAt: string;
   event?: EventType[];
+  file?: string;
+  picture_description?: string;
+  videoURL?: string;
 }

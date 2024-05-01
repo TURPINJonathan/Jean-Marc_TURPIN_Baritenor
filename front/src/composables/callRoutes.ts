@@ -8,7 +8,7 @@ interface ApiResponse<T> {
 }
 
 export function useApi() {
-  const base_url = 'https://localhost:8001' + '/api/';
+  const base_url = getBackURL() + '/api/';
 
   // To make a GET call
   async function get<T>(url: string, params?: string[]): Promise<ApiResponse<T>  | null> {
@@ -34,6 +34,14 @@ export function useApi() {
     }
   }
 
+  function getBackURL() {
+    if ( import.meta.env.MODE === 'development' ) {
+      return 'https://localhost:8001';
+    }
+
+    return null
+  }
+
   // Retourner les fonctions pour les utiliser dans les composants
-  return { get, post };
+  return { get, post, getBackURL };
 }

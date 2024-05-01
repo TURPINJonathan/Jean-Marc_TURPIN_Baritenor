@@ -11,6 +11,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ArticleCrudController extends AbstractCrudController
 {
@@ -30,25 +33,24 @@ class ArticleCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm()->hideOnDetail()->hideOnIndex(),
-            FormField::addFieldset('Généralités'),
+            FormField::addTab('Généralités'),
             TextField::new('title')
                 ->setLabel('Titre de larticle')
-                ->setColumns(8)
+                ->setColumns(6)
                 ->setHelp('255 caractères maximum')
                 ->setRequired(true)
                 ->setMaxLength(255),
+            SlugField::new('slug')
+                ->setTargetFieldName('title')
+                ->setColumns(6)
+                ->hideOnIndex()
+                ->hideOnDetail(),
             DateTimeField::new('createdAt')
                 ->setLabel('Créé le')
                 ->setDisabled()
                 ->setFormat('EEEE d MMMM yyyy à HH:mm')
                 ->setHelp('Date le parution')
-                ->setColumns(4),
-            AssociationField::new('layout')
-                ->setLabel('Choix du rendu')
-                ->hideOnIndex()
-                ->setHelp('Un seul choix possible')
-                ->setRequired(true)
-                ->setColumns(8),
+                ->setColumns(2),
             AssociationField::new('category')
                 ->setLabel('Catégorie(s)')
                 ->hideOnIndex()
@@ -60,11 +62,41 @@ class ArticleCrudController extends AbstractCrudController
                 ->setLabel('Contenu de l\'article')
                 ->setRequired(true)
                 ->hideOnIndex(),
-            FormField::addFieldset('Associations possibles (facultatif)')->renderCollapsed(),
+            
+            FormField::addTab('Associations possibles (facultatif)'),
+            FormField::addColumn(6),
+            TextField::new('imageFile')
+                ->setFormType(VichImageType::class)
+                ->setLabel('Image')
+                ->setRequired(false)
+                ->hideOnIndex()
+                ->setHelp('Image de l\'article')
+                ->setColumns(12),
+            ImageField::new('file')
+                ->setBasePath('articles')
+                ->setUploadDir('articles')
+                ->setRequired(false)
+                ->hideOnForm()
+                ->setColumns(12),
+            TextField::new('picture_description')
+                ->setLabel('Légende de l\'image')
+                ->setRequired(false)
+                ->setColumns(12)
+                ->hideOnIndex()
+                ->setHelp('Sera lue par les liseuses d\'écran'),
+
+            FormField::addColumn(6),
             AssociationField::new('event')
                 ->setRequired(false)
-                ->setHelp('Associer un ou plusieurs événement(s) ?')
-                ->setLabel('&#201;vénement(s) associé(s)'),
+                ->setHelp('Associer un ou plusieurs événement(s)')
+                ->setColumns(12)
+                ->setLabel('&#201;vénement(s)'),
+            TextField::new('videoURL')
+                ->setLabel('Vidéo')
+                ->setRequired(false)
+                ->setColumns(12)
+                ->hideOnIndex()
+                ->setHelp('Exemple: https://youtu.be/Ha8c8n4EIgI?si=I07d0QQcG7riuaiL'),
         ];
     }
 }

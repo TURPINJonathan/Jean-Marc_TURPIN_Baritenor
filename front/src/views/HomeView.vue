@@ -54,7 +54,7 @@ onMounted(async () => {
         </div>
         
         <div class="lastArticle_content">
-          <img src="https://placehold.co/600x400" alt="" srcset="" />
+          <img src="https://placehold.co/600x400" alt="" />
           <div class="lastArticle_content-text" v-html="lastArticle.content" />
         </div>
       </article>
