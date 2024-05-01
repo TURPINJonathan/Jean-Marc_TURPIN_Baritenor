@@ -4,7 +4,7 @@ import { useApi } from "@composables/callRoutes";
 import type { ArticleType } from "@types/articleType";
 import { onMounted, ref } from "vue";
 
-const { get } = useApi();
+const { get, getBackURL } = useApi();
 const lastArticle = ref<ArticleType | null>(null);
 
 onMounted(async () => {
@@ -53,8 +53,10 @@ onMounted(async () => {
           </template>
         </div>
         
-        <div class="lastArticle_content">
-          <img src="https://placehold.co/600x400" alt="" />
+        <div class="lastArticle-container">
+          <div class="lastArticle-picture">
+            <img :src="`${getBackURL()}/articles/${lastArticle.file}`" :alt="lastArticle.picture_description" />
+          </div>
           <div class="lastArticle_content-text" v-html="lastArticle.content" />
         </div>
       </article>
@@ -131,17 +133,26 @@ main section {
       }
     }
 
-    .lastArticle_content {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
+    .lastArticle-container {
+      min-height: 300px;
 
-      img {
-        flex: 25 1 200px;
+      .lastArticle-picture {
+        float: left;
+        max-width: 40svw;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+
+        img {
+          height: auto;
+          max-height: 300px;
+          width: 100%;
+        }
       }
 
       .lastArticle_content-text {
-          flex: 75 1 200px;
+          padding: 0 20px;
           overflow: hidden;
           display: -webkit-box;
           -webkit-line-clamp: 5;
@@ -155,6 +166,27 @@ main section {
 @media (max-width: 1150px) {
   main section #jm-message #jm-message_picture {
     border-radius: 0;
+  }
+}
+
+@media (max-width: 800px) {
+  main section #last-article {
+    padding: 0 2rem;
+  
+    .lastArticle-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .lastArticle-picture {
+        float: none;
+        height: auto;
+      }
+
+      .lastArticle_content-text {
+        padding: 0;
+      }
+    }
   }
 }
 </style>
