@@ -32,6 +32,9 @@ dependencies:
   vue-router:
     specifier: ^4.3.2
     version: 4.3.2(vue@3.4.26)
+  vue3-youtube:
+    specifier: ^0.1.9
+    version: 0.1.9(typescript@5.3.3)
 
 devDependencies:
   '@rushstack/eslint-patch':
@@ -733,6 +736,10 @@ packages:
       '@types/node': 18.19.31
     dev: true
     optional: true
+
+  /@types/youtube@0.0.39:
+    resolution: {integrity: sha512-naVjyTZT/CoNwEQW3+mf9E/x6sgB7QIPbRDtVlPUpHlmuQTk+j6gQBy0T5CRkV8oC0GYQjMgfr3VdueTSVLTjw==}
+    dev: false
 
   /@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.57.0)(typescript@5.3.3):
     resolution: {integrity: sha512-oy9+hTPCUFpngkEZUSzbf9MxI65wbKFoQYsgPdILTfbUldp5ovUuphZVe4i30emU9M/kP+T64Di0mxl7dSw3MA==}
@@ -1456,6 +1463,11 @@ packages:
       proto-list: 1.2.4
     dev: true
 
+  /core-js@3.37.0:
+    resolution: {integrity: sha512-fu5vHevQ8ZG4og+LXug8ulUtVxjOcEYvifJr7L5Bfq9GOztVqsKd9/59hUk2ZSbCrS3BqUr3EpaYGIYzq7g3Ug==}
+    requiresBuild: true
+    dev: false
+
   /core-util-is@1.0.2:
     resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
     dev: true
@@ -2141,6 +2153,10 @@ packages:
     resolution: {integrity: sha512-VaUJspBffn/LMCJVoMvSAdmscJyS1auj5Zulnn5UoYcY531UWmdwhRWkcGKnGU93m5HSXP9LP2usOryrBtQowA==}
     engines: {node: '>=16'}
     dev: true
+
+  /get-youtube-id@1.0.1:
+    resolution: {integrity: sha512-5yidLzoLXbtw82a/Wb7LrajkGn29BM6JuLWeHyNfzOGp1weGyW4+7eMz6cP23+etqj27VlOFtq8fFFDMLq/FXQ==}
+    dev: false
 
   /getos@3.2.1:
     resolution: {integrity: sha512-U56CfOK17OKgTVqozZjUKNdkfEv6jk5WISBJ8SHoagjE6L69zOwl3Z+O8myjY9MEW3i2HPWQBt/LTbCgcC973Q==}
@@ -3816,6 +3832,17 @@ packages:
       semver: 7.6.0
       typescript: 5.3.3
     dev: true
+
+  /vue3-youtube@0.1.9(typescript@5.3.3):
+    resolution: {integrity: sha512-DhEbLsXDRHF7Cf5eB8vuoAbK+WiFuOHa65vlHU3XE5xky058ZK5/jAtHGr+JGhW0Xy2bSl8Eezz6/cR8GmNzgw==}
+    dependencies:
+      '@types/youtube': 0.0.39
+      core-js: 3.37.0
+      get-youtube-id: 1.0.1
+      vue: 3.4.26(typescript@5.3.3)
+    transitivePeerDependencies:
+      - typescript
+    dev: false
 
   /vue@3.4.26(typescript@5.3.3):
     resolution: {integrity: sha512-bUIq/p+VB+0xrJubaemrfhk1/FiW9iX+pDV+62I/XJ6EkspAO9/DXEjbDFoe8pIfOZBqfk45i9BMc41ptP/uRg==}

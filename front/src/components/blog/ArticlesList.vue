@@ -7,11 +7,11 @@ import { useNavStore } from "@stores/useNavStore";
 const { formatDate } = useDateUtils()
 
 const props = defineProps(['articlesList'])
-const { get } = useApi();
+const { get, getBackURL } = useApi();
 const navStore = useNavStore();
 
-const handleClickOnArticle = async (id: number) => {
-  const data = await get(`article/${id}`);
+const handleClickOnArticle = async (slug: string) => {
+  const data = await get(`article/${slug}`);
   if (data && data.title) {
     navStore.setTitle(data.title)
   }
@@ -21,7 +21,7 @@ const handleClickOnArticle = async (id: number) => {
 
 <template>
   <section id="blog_article">
-    <router-link v-for="article in props.articlesList" :key="article.id" :to="'/blog/' + article.id" @click="handleClickOnArticle(article.id)">
+    <router-link v-for="(article, index) in props.articlesList" :key="article.id" :to="'/blog/' + article.slug" @click="handleClickOnArticle(article.slug)">
       <article>
         <div class="article_title">
           <h3>{{ article.title }}</h3>
@@ -29,8 +29,10 @@ const handleClickOnArticle = async (id: number) => {
         </div>
         
         <div class="article_content">
-          <img src="https://placehold.co/600x400" alt="" srcset="" />
-          <div class="article_content-text" v-html="article.content" />
+          <div class="article_content-picture">
+            <img :src="`${getBackURL()}/articles/${article.file}`" :alt="article.picture_description" />
+          </div>
+          <div :style="{ order: index % 2 === 0 ? -1 : 'auto' }" class="article_content-text" v-html="article.content" />
         </div>
       </article>
     </router-link>
@@ -51,8 +53,7 @@ const handleClickOnArticle = async (id: number) => {
     article {
       border: 1px solid rgb(241, 241, 241);
       flex: 20 1 300px;
-      padding: 0.5rem;
-      padding-top: 0;
+      padding: 0 0.5rem 1rem;
 
       &:hover {
         cursor: pointer;
@@ -73,8 +74,17 @@ const handleClickOnArticle = async (id: number) => {
         flex-wrap: wrap;
         gap: 12px;
 
-        img {
+        .article_content-picture {
           flex: 50 1 200px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          img {
+            height: auto;
+            width:  auto;
+            max-height: 200px;
+          }
         }
 
         .article_content-text {

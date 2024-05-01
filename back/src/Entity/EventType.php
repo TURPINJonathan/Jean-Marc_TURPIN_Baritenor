@@ -18,7 +18,7 @@ class EventType
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
-    #[Groups(['event_get'])]
+    #[Groups(['event_get', 'article_with_event_get'])]
     private ?string $label = null;
 
     #[ORM\OneToMany(mappedBy: 'eventType', targetEntity: EventPlace::class)]

@@ -64,11 +64,11 @@ const updateMapPosition = (selectedDate: Date) => {
         <div>
           <Calendar :eventsData="eventsData" @dateClicked="updateMapPosition" />
         </div>
-        <img src="https://placehold.co/600x400" alt="" srcset="" />
+        <img src="https://placehold.co/600x400" alt="" />
       </article>
 
       <article>
-        <img src="https://placehold.co/600x400" alt="" srcset="" />
+        <img src="https://placehold.co/600x400" alt="" />
         <div>
           <MapVue
             :eventsData="eventsData"

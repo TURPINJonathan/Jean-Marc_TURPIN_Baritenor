@@ -8,9 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[Vich\Uploadable]
 class Article
 {
     #[ORM\Id]
@@ -31,11 +34,6 @@ class Article
     #[Groups(['article_get'])]
     private Collection $category;
 
-    #[ORM\ManyToOne(inversedBy: 'articles')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['article_get'])]
-    private ?ArticleLayout $layout = null;
-
     #[ORM\Column]
     #[Groups(['article_get'])]
     private ?\DateTimeImmutable $createdAt = null;
@@ -43,6 +41,25 @@ class Article
     #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'articles')]
     #[Groups(['article_get'])]
     private Collection $event;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['article_get'])]
+    private ?string $file = null;
+
+    #[Vich\UploadableField(mapping: 'article_pictures', fileNameProperty: 'file')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(length: 255)]
+    #[Groups(['article_get'])]
+    private ?string $slug = null;
+
+    #[ORM\Column(length: 500, nullable: true)]
+    #[Groups(['article_get'])]
+    private ?string $picture_description = null;
+
+    #[ORM\Column(length: 1000, nullable: true)]
+    #[Groups(['article_get'])]
+    private ?string $videoURL = null;
 
     public function __construct()
     {
@@ -104,18 +121,6 @@ class Article
         return $this;
     }
 
-    public function getLayout(): ?ArticleLayout
-    {
-        return $this->layout;
-    }
-
-    public function setLayout(?ArticleLayout $layout): static
-    {
-        $this->layout = $layout;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -148,6 +153,70 @@ class Article
     public function removeEvent(Event $event): static
     {
         $this->event->removeElement($event);
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(?string $file): static
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): static
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile) {
+            $this->createdAt = new DateTimeImmutable('now');
+        }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getPictureDescription(): ?string
+    {
+        return $this->picture_description;
+    }
+
+    public function setPictureDescription(?string $picture_description): static
+    {
+        $this->picture_description = $picture_description;
+
+        return $this;
+    }
+
+    public function getVideoURL(): ?string
+    {
+        return $this->videoURL;
+    }
+
+    public function setVideoURL(?string $videoURL): static
+    {
+        $this->videoURL = $videoURL;
 
         return $this;
     }

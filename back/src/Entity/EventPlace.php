@@ -18,27 +18,27 @@ class EventPlace
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['event_get'])]
+    #[Groups(['event_get', 'article_with_event_get'])]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'eventPlaces')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['event_get'])]
+    #[Groups(['event_get', 'article_with_event_get'])]
     private ?EventType $eventType = null;
 
     #[ORM\OneToMany(mappedBy: 'eventPlace', targetEntity: Event::class)]
     private Collection $events;
 
     #[ORM\Column(type: 'decimal', precision: 15, scale: 13)]
-    #[Groups(['event_get'])]
+    #[Groups(['event_get', 'article_with_event_get'])]
     private ?float $latitude = null;
 
     #[ORM\Column(type: 'decimal', precision: 15, scale: 13)]
-    #[Groups(['event_get'])]
+    #[Groups(['event_get', 'article_with_event_get'])]
     private ?float $longitude = null;
 
     #[ORM\Column(length: 100)]
-    #[Groups(['event_get'])]
+    #[Groups(['event_get', 'article_with_event_get'])]
     private ?string $city = null;
 
     public function __construct()

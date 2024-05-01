@@ -98,6 +98,15 @@ class ArticleRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function findArticleBySlug($slug): ?Article
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function findArticlesByEvent($id)
     {
         return $this->createQueryBuilder('a')

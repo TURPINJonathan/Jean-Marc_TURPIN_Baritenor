@@ -25,7 +25,8 @@
     "leaflet": "^1.9.4",
     "pinia": "^2.1.7",
     "vue": "^3.4.26",
-    "vue-router": "^4.3.2"
+    "vue-router": "^4.3.2",
+    "vue3-youtube": "^0.1.9"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.10.2",

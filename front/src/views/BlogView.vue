@@ -5,6 +5,7 @@ import { onMounted, ref } from 'vue';
 import ArticleSearch from '@components/blog/ArticleSearch.vue'
 import ArticlesList from '@components/blog/ArticlesList.vue'
 import Loader from '@components/common/Loader.vue'
+import HomeButton from '@components/common/HomeButton.vue'
 
 const articleList = ref<ArticleType[]>([])
 const isLoading = ref<boolean>(false)
@@ -38,100 +39,106 @@ const handleNewSearch = (searchParams: string[]) => {
 </script>
 
 <template>
-  <main id="blog">
-    <ArticleSearch @search-updated="handleNewSearch" />
-    
-    <template v-if="isLoading">
-      <div id="blog_article" class="loaders">
-        <Loader />
-      </div>
-    </template>
+  <main>
+    <div id="blog">
+      <ArticleSearch @search-updated="handleNewSearch" />
+      
+      <template v-if="isLoading">
+        <div id="blog_article" class="loaders">
+          <Loader />
+        </div>
+      </template>
+      <template v-else>
+        <ArticlesList :articlesList="articleList" />
+      </template>
+    </div>
 
-    <template v-else>
-      <ArticlesList :articlesList="articleList" />
-    </template>
+    <HomeButton />
   </main>
 </template>
 
 <style scoped lang="scss">
 main {
   display: flex;
+  flex-direction: column;
+
+  #blog {
+  display: flex;
   flex-wrap: wrap;
   padding: 20px 3rem 0 3rem;
 
-  #blog_search {
-    flex: 20 1 250px;
-    padding: 15px;
+    #blog_search {
+      flex: 20 1 250px;
+      padding: 15px;
 
-    form {
-      display: flex;
-      flex-direction: column;
-
-      label {
+      form {
         display: flex;
         flex-direction: column;
 
-        input, select {
-          margin-top: 5px;
-          margin-bottom: 10px;
+        label {
+          display: flex;
+          flex-direction: column;
+
+          input, select {
+            margin-top: 5px;
+            margin-bottom: 10px;
+          }
         }
-      }
 
-
-
-      button {
-        margin: 20px 0;
+        button {
+          margin: 20px 0;
+        }
       }
     }
-  }
 
-  .loaders {
-    flex: 80 1 450px !important;
-  }
+    .loaders {
+      flex: 80 1 450px !important;
+    }
 
 
-  #blog_article {
-    flex: 80 1 450px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+    #blog_article {
+      flex: 80 1 450px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
 
-    article {
-      border: 1px solid rgb(241, 241, 241);
-      flex: 20 1 300px;
-      padding: 0.5rem;
-      padding-top: 0;
+      article {
+        border: 1px solid rgb(241, 241, 241);
+        flex: 20 1 300px;
+        padding: 0.5rem;
+        padding-top: 0;
 
-      &:hover {
-        cursor: pointer;
-        background-color: rgba(241, 241, 241, 0.056);
-      }
-
-      .article_title {
-        margin: 1rem 0.5rem;
-        text-align: center;
-
-        small {
-          text-transform: capitalize;
-        }
-      }
-
-      .article_content {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-
-        img {
-          flex: 50 1 200px;
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(241, 241, 241, 0.056);
         }
 
-        .article_content-text {
-          flex: 50 1 200px;
-          overflow: hidden;
-          display: -webkit-box;
-          -webkit-line-clamp: 5;
-          -webkit-box-orient: vertical;
-          text-overflow: ellipsis;
+        .article_title {
+          margin: 1rem 0.5rem;
+          text-align: center;
+
+          small {
+            text-transform: capitalize;
+          }
+        }
+
+        .article_content {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+
+          img {
+            flex: 50 1 200px;
+          }
+
+          .article_content-text {
+            flex: 50 1 200px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+          }
         }
       }
     }

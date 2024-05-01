@@ -8,3 +8,8 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+
+# PICTURES
+public/articles/*
+!public/articles/.gitignore

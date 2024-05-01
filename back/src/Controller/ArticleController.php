@@ -44,6 +44,24 @@ class ArticleController extends AbstractController
         return $this->json($article, Response::HTTP_OK, [], ['groups' => $serializationGroup]);
     }
 
+    #[Route('/api/article/{slug}', name: 'article_slug', methods: ['GET'], requirements: ['slug' => '[a-z0-9-]+'])]
+    public function articleBySlug(ManagerRegistry $doctrine, $slug): Response
+    {
+        $article = $doctrine->getManager()->getRepository(Article::class)->findArticleBySlug(['slug' => $slug]);
+        $serializationGroup = ['article_get'];
+        $articleEvent = $article->getEvent();
+
+        if (!$article) {
+            throw new NoResultException();
+        }
+
+        if (!empty($articleEvent) && count($articleEvent) > 0) {
+            $serializationGroup[] = 'article_with_event_get';
+        }
+
+        return $this->json($article, Response::HTTP_OK, [], ['groups' => $serializationGroup]);
+    }
+
     #[Route('/api/article/name_{title}', name: 'article_by_name', methods: ['GET'], requirements: ['id' => '[^\s]+'])]
     public function articleByTitle(ArticleRepository $article, $title): Response
     {
